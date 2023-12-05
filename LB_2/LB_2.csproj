@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{9A219DB6-EE8F-4AD8-94F2-B2641BC6F22A}</ProjectGuid>
+        <OutputType>WinExe</OutputType>
+        <RootNamespace>LB_2</RootNamespace>
+        <AssemblyName>LB_2</AssemblyName>
+        <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <Deterministic>true</Deterministic>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System"/>
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Xml.Linq"/>
+        <Reference Include="System.Data.DataSetExtensions"/>
+        <Reference Include="Microsoft.CSharp"/>
+        <Reference Include="System.Data"/>
+        <Reference Include="System.Deployment"/>
+        <Reference Include="System.Drawing"/>
+        <Reference Include="System.Net.Http"/>
+        <Reference Include="System.Windows.Forms"/>
+        <Reference Include="System.Xml"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Model\Operator\AccountValidateHelper.cs" />
+        <Compile Include="Model\Operator\Call.cs" />
+        <Compile Include="Model\Operator\GeneratorHelper.cs" />
+        <Compile Include="Model\Operator\Helper.cs" />
+        <Compile Include="Model\Operator\MobileOperatorAccount.cs" />
+        <Compile Include="Model\Operator\OperatorError.cs" />
+        <Compile Include="Model\Storage.cs" />
+        <Compile Include="Model\Tariff\Tariff.cs" />
+        <Compile Include="Model\Tariff\TariffFreeVpn.cs" />
+        <Compile Include="Model\Tariff\TariffMax.cs" />
+        <Compile Include="Model\Tariff\TariffPro.cs" />
+        <Compile Include="Model\Tariff\TariffStarter.cs" />
+        <Compile Include="Model\Tariff\TariffTurbo.cs" />
+        <Compile Include="Model\Tariff\TariffUnlimitInternet.cs" />
+        <Compile Include="Program.cs" />
+        <Compile Include="Properties\AddMoneyView.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="Properties\AddMoneyView.Designer.cs">
+          <DependentUpon>AddMoneyView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Properties\ChangeTariffView.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="Properties\ChangeTariffView.Designer.cs">
+          <DependentUpon>ChangeTariffView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="Properties\UseVpnView.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="Properties\UseVpnView.Designer.cs">
+          <DependentUpon>UseVpnView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="View\AddMoneyView.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="View\AddMoneyView.Designer.cs">
+          <DependentUpon>AddMoneyView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="View\CallHistoryView.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="View\CallHistoryView.Designer.cs">
+          <DependentUpon>CallHistoryView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="View\ChangeTariffView.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="View\ChangeTariffView.Designer.cs">
+          <DependentUpon>ChangeTariffView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="View\MainView.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="View\MainView.Designer.cs">
+          <DependentUpon>MainView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="View\NewOperatorView.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="View\NewOperatorView.Designer.cs">
+          <DependentUpon>NewOperatorView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="View\StartCallView.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="View\StartCallView.Designer.cs">
+          <DependentUpon>StartCallView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="View\UseVpnView.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="View\UseVpnView.Designer.cs">
+          <DependentUpon>UseVpnView.cs</DependentUpon>
+        </Compile>
+        <EmbeddedResource Include="Properties\AddMoneyView.resx">
+          <DependentUpon>AddMoneyView.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Properties\ChangeTariffView.resx">
+          <DependentUpon>ChangeTariffView.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+            <SubType>Designer</SubType>
+        </EmbeddedResource>
+        <Compile Include="Properties\Resources.Designer.cs">
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+        <EmbeddedResource Include="Properties\UseVpnView.resx">
+          <DependentUpon>UseVpnView.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="View\AddMoneyView.resx">
+          <DependentUpon>AddMoneyView.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="View\CallHistoryView.resx">
+          <DependentUpon>CallHistoryView.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="View\ChangeTariffView.resx">
+          <DependentUpon>ChangeTariffView.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="View\MainView.resx">
+          <DependentUpon>MainView.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="View\NewOperatorView.resx">
+          <DependentUpon>NewOperatorView.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="View\StartCallView.resx">
+          <DependentUpon>StartCallView.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="View\UseVpnView.resx">
+          <DependentUpon>UseVpnView.cs</DependentUpon>
+        </EmbeddedResource>
+        <None Include="Properties\Settings.settings">
+            <Generator>SettingsSingleFileGenerator</Generator>
+            <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+        </None>
+        <Compile Include="Properties\Settings.Designer.cs">
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Settings.settings</DependentUpon>
+            <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="App.config" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+</Project>
