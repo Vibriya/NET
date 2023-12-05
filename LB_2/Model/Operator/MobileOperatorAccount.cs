@@ -8,6 +8,8 @@ namespace LB_1
     {
         private static readonly AccountValidateHelper MobChecker = new AccountValidateHelper();
         private static readonly GeneratorHelper GeneratorHelper = new GeneratorHelper();
+        
+        public long Id { get; set; }
 
         public string OperatorName { get; }
         
