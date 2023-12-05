@@ -1,8 +1,8 @@
 namespace LB_2.Model.OperatorCompany
 {
-    static class CompanyValidator
+    internal class CompanyValidator
     {
-        public static bool ParametersIsValid(string name, string edrpoy) => 
+        public bool ParametersIsValid(string name, string edrpoy) => 
             !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(edrpoy);
     }
 }

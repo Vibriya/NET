@@ -8,16 +8,16 @@ namespace LB_1
 
         public uint Price { get; }
 
-        public int PriceMinute { get; }
+        public uint PriceMinute { get; }
 
-        public int PriceMinuteRoaming { get; }
+        public uint PriceMinuteRoaming { get; }
 
         public uint Internet { get; set; }
 
         protected const uint VpnPrice = 2;
         
 
-        protected Tariff(string name, uint price, int priceMinute, int priceMinuteRoaming, uint internet)
+        protected Tariff(string name, uint price, uint priceMinute, uint priceMinuteRoaming, uint internet)
         {
             Name = name;
             Price = price;
@@ -26,7 +26,7 @@ namespace LB_1
             Internet = internet;
         }
 
-        public int Call(int minutes, bool paid, bool inRoaming) => 
+        public uint Call(uint minutes, bool paid, bool inRoaming) => 
             minutes * (paid ? 0 : inRoaming ? PriceMinuteRoaming : PriceMinute);
         
 

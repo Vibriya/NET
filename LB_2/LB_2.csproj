@@ -46,6 +46,7 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Model\OperatorCompany\ClientLog.cs" />
         <Compile Include="Model\OperatorCompany\Company.cs" />
         <Compile Include="Model\OperatorCompany\CompanyValidator.cs" />
         <Compile Include="Model\Operator\AccountValidateHelper.cs" />

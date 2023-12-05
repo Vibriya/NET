@@ -2,12 +2,14 @@
 using System.Windows.Forms;
 using LB_1;
 using LB_2.Model;
+using LB_2.Model.OperatorCompany;
 
 namespace LB_2
 {
     public partial class MainView : Form
     {
         private readonly BindingSource _bs;
+        private readonly Company _company;
         public MainView()
         {
             InitializeComponent();
@@ -19,11 +21,13 @@ namespace LB_2
             dgOperatorGrid.DataSource = _bs;
 
             btDelOperator.Enabled = _bs.Count > 0;
+            
+            
         }
 
         private void btAddOperator_Click(object sender, EventArgs e)
         {
-            var newOperatorView = new NewOperatorView();
+            var newOperatorView = new NewOperatorView(_company);
             newOperatorView.ShowDialog();
             
             if (newOperatorView.DialogResult != DialogResult.OK) return;

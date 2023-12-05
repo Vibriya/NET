@@ -1,30 +1,68 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LB_1;
 
 namespace LB_2.Model.OperatorCompany
 {
     public class Company
     {
+        private static readonly CompanyValidator Validator = new CompanyValidator();
+        
+        private const int NumbersOfTaxedMonths = 12;
         public string Name { get; set; }
-        public Dictionary<long, MobileOperatorAccount> ClientsDict { get; }
-        public HashSet<string> StorageHashSet { get; }
+        public Dictionary<int, MobileOperatorAccount> ServicedClientsDict { get; }
+        public Dictionary<int, MobileOperatorAccount> NonservicedClientsDict { get; }
+        public HashSet<ClientLog> StorageHashSet { get; }
         public string EDRPOY { get; }
         public List<long> IncomeList { get; }
-        public long NumberClients { get; }
+        public long NumberClients { get; protected set; }
+        public long CompanyIncomePerMonth { get; protected set; }
 
         private Company(string name, string edrpoy)
         {
             Name = name;
-            ClientsDict = new Dictionary<long, MobileOperatorAccount>();
-            StorageHashSet = new HashSet<string>();
+            ServicedClientsDict = new Dictionary<int, MobileOperatorAccount>();
+            NonservicedClientsDict = new Dictionary<int, MobileOperatorAccount>();
+            StorageHashSet = new HashSet<ClientLog>();
             EDRPOY = edrpoy;
             IncomeList = new List<long>();
             NumberClients = 0;
+            CompanyIncomePerMonth = 0;
         }
 
-        public Company Create(string name, string edrpoy) => 
-            CompanyValidator.ParametersIsValid(name, edrpoy)? 
+        public static Company Create(string name, string edrpoy) => 
+            Validator.ParametersIsValid(name, edrpoy)? 
                 new Company(name, edrpoy) : throw new ArgumentException("Company's parameters are invalid");
+
+        public void ConnectNewClient(MobileOperatorAccount mob)
+        {
+            ServicedClientsDict.Add(mob.Id, mob);
+            NumberClients++;
+            CompanyIncomePerMonth += mob.Tariff.Price;
+        }
+
+        public void StopServiceClient(int mobId)
+        {
+            var curMob = ServicedClientsDict[mobId];
+            NonservicedClientsDict.Add(mobId, curMob);
+            ServicedClientsDict.Remove(mobId);
+            NumberClients--;
+            CompanyIncomePerMonth -= curMob.Tariff.Price;
+        }
+
+        public double[] GetTaxList()
+        {
+            var taxes = new double[NumbersOfTaxedMonths];
+            for (var i = 0; i < taxes.Length; i++)
+            {
+                uint sum = 0;
+                foreach (var clientLog in StorageHashSet)
+                    if (clientLog.CurMonth == i) sum += clientLog.CompanyIncome;
+                
+                taxes[i] = (CompanyIncomePerMonth + sum) * 0.15;
+            }
+            return taxes;
+        }
     }
 }

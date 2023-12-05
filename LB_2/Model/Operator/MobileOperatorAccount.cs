@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using LB_2;
+using LB_2.Model.OperatorCompany;
 
 namespace LB_1
 {
@@ -8,8 +9,9 @@ namespace LB_1
     {
         private static readonly AccountValidateHelper MobChecker = new AccountValidateHelper();
         private static readonly GeneratorHelper GeneratorHelper = new GeneratorHelper();
+        private readonly Company _company;
         
-        public long Id { get; set; }
+        public int Id { get; }
 
         public string OperatorName { get; }
         
@@ -27,6 +29,7 @@ namespace LB_1
 
         //Конструктор для створення дефолтного рахунку
         public MobileOperatorAccount() : this(
+            Company.Create("", ""),
             "Kyivstar",
             new TariffTurbo(),
             false,
@@ -36,6 +39,7 @@ namespace LB_1
         
         //Приватний конструктор з параметрами, використовується в Create()
         private MobileOperatorAccount(
+            Company company,
             string operatorName, 
             Tariff tariff, 
             bool paid, 
@@ -43,6 +47,8 @@ namespace LB_1
             int currentAccount, 
             string phoneNumber)
         {
+            _company = company;
+            Id = GeneratorHelper.GenerateAccountId();
             OperatorName = operatorName;
             Tariff = tariff;
             Paid = paid;
@@ -55,6 +61,7 @@ namespace LB_1
         /*Метод для перевірки аргументів конструктора.
          Повертає екземпляр рахунку у разі успуху або кидає ArgumentException*/
         public static MobileOperatorAccount Create(
+            Company company,
             string name, 
             Tariff tariff, 
             bool paid, 
@@ -63,19 +70,20 @@ namespace LB_1
             string phoneNumber
         )
         {
-            if (MobChecker.AcceptableData(name, phoneNumber))
-                return new MobileOperatorAccount(
+            return MobChecker.AcceptableData(name, phoneNumber)? 
+                new MobileOperatorAccount(
+                    company,
                     name, 
                     tariff, 
                     paid, 
                     roaming,
                     currentAccount, 
                     phoneNumber
-                );
-            throw new ArgumentException("MobileOperatorAccount.Create() arguments is not valid");
+                ) :
+            throw new ArgumentException("MobileOperatorAccount.Create() arguments are not valid");
         }
         
-        public OperatorError StartCall(int minutes, string toNumber, out int price)
+        public OperatorError StartCall(uint minutes, string toNumber, out uint price)
         {
             price = 0;
             if (minutes <= 0) return OperatorError.MINUTES_NEGATIVE_ERROR; 
@@ -83,12 +91,20 @@ namespace LB_1
             
             price = Tariff.Call(minutes, Paid, InRoaming);
             CurrentAccount -= price;
-            _callHistory = _callHistory.Append(new Call(toNumber, DateTime.Now , (uint) minutes)).ToArray();
+            _callHistory = _callHistory.Append(new Call(toNumber, DateTime.Now , minutes)).ToArray();
+            if(price != 0) _company.StorageHashSet.Add(new ClientLog(Id, price));
             return OperatorError.SUCCESS;
         }
+        
         public void ChangeTariff(Tariff newTariff) => Tariff = newTariff;
         public void AddMoney(uint money) => CurrentAccount += money;
-        public uint UseVpn(uint mb) => Tariff.UseVpn(mb);
+
+        public uint UseVpn(uint mb)
+        {
+            var res = Tariff.UseVpn(mb);;
+            if(res != 0) _company.StorageHashSet.Add(new ClientLog(Id, res));
+            return res;
+        } 
 
         /*Метод отримання історії дзвінків.
         Повертає копію масиву для дотримання інкапсуляції*/
