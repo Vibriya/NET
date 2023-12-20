@@ -1,7 +1,9 @@
+using System;
 using LB_2.Properties;
 
 namespace LB_2
 {
+    [Serializable]
     public class TariffFreeVpn : TariffUnlimitInternet
     {
         private const bool FreeVpn = true;
@@ -10,7 +12,7 @@ namespace LB_2
         protected TariffFreeVpn(
             string name, 
             uint price, 
-            int priceMinuteRoaming
+            uint priceMinuteRoaming
             ) : base(name, price, priceMinuteRoaming)
         {
         }

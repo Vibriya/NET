@@ -5,6 +5,7 @@ using LB_2.Model.OperatorCompany;
 
 namespace LB_1
 {
+    [Serializable]
     public class MobileOperatorAccount
     {
         private static readonly AccountValidateHelper MobChecker = new AccountValidateHelper();
@@ -93,16 +94,27 @@ namespace LB_1
             CurrentAccount -= price;
             _callHistory = _callHistory.Append(new Call(toNumber, DateTime.Now , minutes)).ToArray();
             if(price != 0) _company.StorageHashSet.Add(new ClientLog(Id, price));
+            _company.AddOperationToLogs($"Call from {Id}:{PhoneNumber} to {toNumber} for {minutes} cost {price}");
             return OperatorError.SUCCESS;
         }
-        
-        public void ChangeTariff(Tariff newTariff) => Tariff = newTariff;
-        public void AddMoney(uint money) => CurrentAccount += money;
+
+        public void ChangeTariff(Tariff newTariff)
+        {
+            Tariff = newTariff;
+            _company.AddOperationToLogs($"{Id} changed tariff from {Tariff.Name} to {newTariff.Name}");
+        } 
+
+        public void AddMoney(uint money)
+        {
+            CurrentAccount += money;
+            _company.AddOperationToLogs($"{Id} added {money} money");
+        } 
 
         public uint UseVpn(uint mb)
         {
             var res = Tariff.UseVpn(mb);;
             if(res != 0) _company.StorageHashSet.Add(new ClientLog(Id, res));
+            _company.AddOperationToLogs($"{Id} use internet. Cost {res}");
             return res;
         } 
 

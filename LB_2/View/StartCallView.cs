@@ -18,7 +18,7 @@ namespace LB_2
             try
             {
                 var result = _selectedOperator.StartCall(
-                    int.Parse(tbMinutes.Text.Trim()),
+                    uint.Parse(tbMinutes.Text.Trim()),
                     tbToNumber.Text.Trim(),
                     out var price
                 ).ToString();

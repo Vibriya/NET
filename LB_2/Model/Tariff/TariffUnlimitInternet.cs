@@ -1,7 +1,10 @@
+using System;
 using LB_1;
 
 namespace LB_2.Properties
 {
+    
+    [Serializable]
     public class TariffUnlimitInternet : Tariff
     {
         private const bool HideNumber = true;
@@ -10,7 +13,7 @@ namespace LB_2.Properties
         protected TariffUnlimitInternet(
             string name, 
             uint price, 
-            int priceMinuteRoaming
+            uint priceMinuteRoaming
             ) : base(name, price, 0, priceMinuteRoaming, int.MaxValue)
         {
         }

@@ -38,13 +38,16 @@
             this.btShowCallHistory = new System.Windows.Forms.Button();
             this.dgOperatorGrid = new System.Windows.Forms.DataGridView();
             this.lbCompanyInfo = new System.Windows.Forms.Label();
+            this.btSaveState = new System.Windows.Forms.Button();
+            this.btSaveLogs = new System.Windows.Forms.Button();
+            this.btRestoreState = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgOperatorGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // btChangeTariff
             // 
             this.btChangeTariff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btChangeTariff.Location = new System.Drawing.Point(814, 109);
+            this.btChangeTariff.Location = new System.Drawing.Point(814, 54);
             this.btChangeTariff.Name = "btChangeTariff";
             this.btChangeTariff.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btChangeTariff.Size = new System.Drawing.Size(151, 36);
@@ -56,7 +59,7 @@
             // btStartCall
             // 
             this.btStartCall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btStartCall.Location = new System.Drawing.Point(814, 67);
+            this.btStartCall.Location = new System.Drawing.Point(814, 12);
             this.btStartCall.Name = "btStartCall";
             this.btStartCall.Size = new System.Drawing.Size(151, 36);
             this.btStartCall.TabIndex = 2;
@@ -67,7 +70,7 @@
             // btAddMoney
             // 
             this.btAddMoney.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btAddMoney.Location = new System.Drawing.Point(814, 151);
+            this.btAddMoney.Location = new System.Drawing.Point(814, 96);
             this.btAddMoney.Name = "btAddMoney";
             this.btAddMoney.Size = new System.Drawing.Size(151, 34);
             this.btAddMoney.TabIndex = 3;
@@ -78,7 +81,7 @@
             // btUseVpn
             // 
             this.btUseVpn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btUseVpn.Location = new System.Drawing.Point(814, 191);
+            this.btUseVpn.Location = new System.Drawing.Point(814, 136);
             this.btUseVpn.Name = "btUseVpn";
             this.btUseVpn.Size = new System.Drawing.Size(151, 33);
             this.btUseVpn.TabIndex = 5;
@@ -111,7 +114,7 @@
             // btShowCallHistory
             // 
             this.btShowCallHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btShowCallHistory.Location = new System.Drawing.Point(814, 230);
+            this.btShowCallHistory.Location = new System.Drawing.Point(814, 175);
             this.btShowCallHistory.Name = "btShowCallHistory";
             this.btShowCallHistory.Size = new System.Drawing.Size(150, 31);
             this.btShowCallHistory.TabIndex = 8;
@@ -138,11 +141,45 @@
             this.lbCompanyInfo.TabIndex = 10;
             this.lbCompanyInfo.Text = "label1";
             // 
+            // btSaveState
+            // 
+            this.btSaveState.Location = new System.Drawing.Point(815, 212);
+            this.btSaveState.Name = "btSaveState";
+            this.btSaveState.Size = new System.Drawing.Size(151, 30);
+            this.btSaveState.TabIndex = 11;
+            this.btSaveState.Text = "Save CompanyInfo";
+            this.btSaveState.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btSaveState.UseVisualStyleBackColor = true;
+            this.btSaveState.Click += new System.EventHandler(this.btSaveCompanyInfo_Click);
+            // 
+            // btSaveLogs
+            // 
+            this.btSaveLogs.Location = new System.Drawing.Point(815, 279);
+            this.btSaveLogs.Name = "btSaveLogs";
+            this.btSaveLogs.Size = new System.Drawing.Size(151, 27);
+            this.btSaveLogs.TabIndex = 12;
+            this.btSaveLogs.Text = "Save Logs";
+            this.btSaveLogs.UseVisualStyleBackColor = true;
+            this.btSaveLogs.Click += new System.EventHandler(this.btSaveLogs_Click);
+            // 
+            // btRestoreState
+            // 
+            this.btRestoreState.Location = new System.Drawing.Point(815, 248);
+            this.btRestoreState.Name = "btRestoreState";
+            this.btRestoreState.Size = new System.Drawing.Size(151, 30);
+            this.btRestoreState.TabIndex = 13;
+            this.btRestoreState.Text = "Restore State";
+            this.btRestoreState.UseVisualStyleBackColor = true;
+            this.btRestoreState.Click += new System.EventHandler(this.btRestoreState_Click);
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 325);
+            this.Controls.Add(this.btRestoreState);
+            this.Controls.Add(this.btSaveLogs);
+            this.Controls.Add(this.btSaveState);
             this.Controls.Add(this.lbCompanyInfo);
             this.Controls.Add(this.dgOperatorGrid);
             this.Controls.Add(this.btShowCallHistory);
@@ -157,6 +194,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgOperatorGrid)).EndInit();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Button btRestoreState;
+
+        private System.Windows.Forms.Button btSaveState;
+        private System.Windows.Forms.Button btSaveLogs;
 
         private System.Windows.Forms.Label lbCompanyInfo;
 

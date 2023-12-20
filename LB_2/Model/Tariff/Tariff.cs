@@ -1,7 +1,10 @@
 
+using System;
+
 namespace LB_1
 {
 
+    [Serializable]
     public abstract class Tariff
     {
         public string Name { get; }

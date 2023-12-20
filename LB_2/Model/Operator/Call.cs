@@ -2,6 +2,7 @@ using System;
 
 namespace LB_1
 {
+    [Serializable]
     public readonly struct Call
     {
         private readonly string _to;
