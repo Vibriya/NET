@@ -5,13 +5,11 @@ using System.Windows.Forms;
 using LB_1;
 using LB_2.Model;
 using LB_2.Model.OperatorCompany;
-using ExtensionMethods;
 
 namespace LB_2
 {
     public partial class MainView : Form
     {
-        private readonly StateManager _stateManager = new StateManager();
         private readonly BindingSource _bs;
         private Company _company;
         public MainView()
@@ -19,7 +17,7 @@ namespace LB_2
             InitializeComponent();
             _bs = new BindingSource();
 
-            if (MessageBox.Show("Create new Company?", "Start") != DialogResult.OK)
+            if (MessageBox.Show("Create a new Company?", "Start", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 var createCompany = new CreateCompanyView();
                 createCompany.ShowDialog();
@@ -37,13 +35,12 @@ namespace LB_2
         private void btAddOperator_Click(object sender, EventArgs e)
         {
             if(_company == null) return;
-            var newOperatorView = new NewOperatorView(_company);
+            var newOperatorView = new NewOperatorView();
             newOperatorView.ShowDialog();
             
             if (newOperatorView.DialogResult != DialogResult.OK) return;
             Storage.OperatorAccounts.Add(newOperatorView.Operator);
             _company.ConnectNewClient(newOperatorView.Operator);
-            _bs.DataSource =  _company.ServicedClientsDict.ToDataTable();
             _bs.ResetBindings(true);
             btDelOperator.Enabled = _bs.Count > 0;
             lbCompanyInfo.Text = _company.ToString();
@@ -151,6 +148,7 @@ namespace LB_2
         //save whole state
         private void btSaveCompanyInfo_Click(object sender, EventArgs e)
         {
+            if(_company == null) return;
             var fileDialog = new SaveFileDialog();
             fileDialog.DefaultExt = ".mob";
             fileDialog.AddExtension = true;
@@ -160,7 +158,7 @@ namespace LB_2
 
             if(fileDialog.ShowDialog() != DialogResult.OK) return;
             
-            _stateManager.SaveWholeState(_company, fileDialog.FileName);
+            StateManager.SaveWholeState(_company, fileDialog.FileName);
         }
         
         //restore whole state
@@ -172,10 +170,9 @@ namespace LB_2
                 if(fileDialog.ShowDialog() != DialogResult.OK) return;
             }
             
-            _stateManager.RestoreWholeState(out _company, fileDialog.FileName);
+            StateManager.RestoreWholeState(out _company, fileDialog.FileName);
             lbCompanyInfo.Text = _company.ToString();
-            Storage.OperatorAccounts = _company.ServicedClientsDict.Values.ToList()
-                .Concat(_company.NonServicedClientsDict.Values.ToList()).ToList();
+            Storage.OperatorAccounts = _company.ServicedClientsDict.Values.ToList();
             _bs.DataSource = Storage.OperatorAccounts;
             _bs.ResetBindings(true);
         }
@@ -183,6 +180,7 @@ namespace LB_2
         //save all users list and company.hashset<string>
         private void btSaveLogs_Click(object sender, EventArgs e)
         {
+            if(_company == null) return;
             var fileDialog = new SaveFileDialog();
             fileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
             fileDialog.DefaultExt = ".txt";
@@ -201,9 +199,9 @@ namespace LB_2
                         writer.WriteLine(acc.ToString());
                     }
 
-                    foreach (var log in _company.LogHashSet)
+                    foreach (var log in _company.StorageHashSet)
                     {
-                        writer.WriteLine(log);
+                        writer.WriteLine(log.Description);
                     }
                 }
 

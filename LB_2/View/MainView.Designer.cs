@@ -139,7 +139,7 @@
             this.lbCompanyInfo.Name = "lbCompanyInfo";
             this.lbCompanyInfo.Size = new System.Drawing.Size(797, 32);
             this.lbCompanyInfo.TabIndex = 10;
-            this.lbCompanyInfo.Text = "label1";
+            this.lbCompanyInfo.Text = "*CompanyInfo*";
             // 
             // btSaveState
             // 

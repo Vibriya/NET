@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Windows.Forms;
 using LB_2;
 using LB_2.Model.OperatorCompany;
 
@@ -10,8 +11,8 @@ namespace LB_1
     {
         private static readonly AccountValidateHelper MobChecker = new AccountValidateHelper();
         private static readonly GeneratorHelper GeneratorHelper = new GeneratorHelper();
-        private readonly Company _company;
-        
+        public event Action<ClientLog> ClientEventHandler;
+        public event Action<int, Tariff, Tariff> ChangedTariffHandler;
         public int Id { get; }
 
         public string OperatorName { get; }
@@ -30,7 +31,6 @@ namespace LB_1
 
         //Конструктор для створення дефолтного рахунку
         public MobileOperatorAccount() : this(
-            Company.Create("", ""),
             "Kyivstar",
             new TariffTurbo(),
             false,
@@ -40,7 +40,6 @@ namespace LB_1
         
         //Приватний конструктор з параметрами, використовується в Create()
         private MobileOperatorAccount(
-            Company company,
             string operatorName, 
             Tariff tariff, 
             bool paid, 
@@ -48,7 +47,6 @@ namespace LB_1
             int currentAccount, 
             string phoneNumber)
         {
-            _company = company;
             Id = GeneratorHelper.GenerateAccountId();
             OperatorName = operatorName;
             Tariff = tariff;
@@ -57,12 +55,13 @@ namespace LB_1
             CurrentAccount = currentAccount;
             PhoneNumber = phoneNumber;
             _callHistory = Array.Empty<Call>();
+            
+            ClientEventHandler = log => Console.WriteLine(log.Description);
+            ChangedTariffHandler = (id, from, to) =>
+                Console.WriteLine($"{id} changed tariff from {from.Name} to {to.Name}"); 
         }
         
-        /*Метод для перевірки аргументів конструктора.
-         Повертає екземпляр рахунку у разі успуху або кидає ArgumentException*/
         public static MobileOperatorAccount Create(
-            Company company,
             string name, 
             Tariff tariff, 
             bool paid, 
@@ -73,7 +72,6 @@ namespace LB_1
         {
             return MobChecker.AcceptableData(name, phoneNumber)? 
                 new MobileOperatorAccount(
-                    company,
                     name, 
                     tariff, 
                     paid, 
@@ -93,33 +91,43 @@ namespace LB_1
             price = Tariff.Call(minutes, Paid, InRoaming);
             CurrentAccount -= price;
             _callHistory = _callHistory.Append(new Call(toNumber, DateTime.Now , minutes)).ToArray();
-            if(price != 0) _company.StorageHashSet.Add(new ClientLog(Id, price));
-            _company.AddOperationToLogs($"Call from {Id}:{PhoneNumber} to {toNumber} for {minutes} cost {price}");
+            ClientEventHandler?.Invoke(new ClientLog(
+                    Id,  
+                    $"Call from {Id} with phone {PhoneNumber} to {toNumber} for {minutes} min cost {price}",
+                    price
+                )
+            );
             return OperatorError.SUCCESS;
         }
 
         public void ChangeTariff(Tariff newTariff)
         {
+            ChangedTariffHandler?.Invoke(Id, Tariff, newTariff);
             Tariff = newTariff;
-            _company.AddOperationToLogs($"{Id} changed tariff from {Tariff.Name} to {newTariff.Name}");
         } 
 
         public void AddMoney(uint money)
         {
             CurrentAccount += money;
-            _company.AddOperationToLogs($"{Id} added {money} money");
+            ClientEventHandler?.Invoke(new ClientLog(
+                    Id, 
+                    $"{Id} added {money} money"
+                )
+            );
         } 
 
         public uint UseVpn(uint mb)
         {
-            var res = Tariff.UseVpn(mb);;
-            if(res != 0) _company.StorageHashSet.Add(new ClientLog(Id, res));
-            _company.AddOperationToLogs($"{Id} use internet. Cost {res}");
+            var res = Tariff.UseVpn(mb);
+            ClientEventHandler?.Invoke(new ClientLog(
+                Id, 
+                $"{Id} use internet. Cost {res}", 
+                res
+                )
+            );
             return res;
         } 
 
-        /*Метод отримання історії дзвінків.
-        Повертає копію масиву для дотримання інкапсуляції*/
         public Call[] GetCalls() => (Call[]) _callHistory.Clone();
 
         public override string ToString()

@@ -8,7 +8,7 @@ namespace LB_2.Model
     {
         private static readonly BinaryFormatter _binFormat = new BinaryFormatter();
         
-        public void SaveWholeState(Company objGraph, string fileName)
+        public static void SaveWholeState(Company objGraph, string fileName)
         {
             using (Stream fStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))
             {
@@ -16,7 +16,7 @@ namespace LB_2.Model
             }
         }
         
-        public void RestoreWholeState(out Company curCompany, string fileName)
+        public static void RestoreWholeState(out Company curCompany, string fileName)
         {
             using (Stream fStream = File.OpenRead(fileName))
             {

@@ -46,20 +46,18 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Model\ExtensionMethods.cs" />
         <Compile Include="Model\OperatorCompany\ClientLog.cs" />
         <Compile Include="Model\OperatorCompany\Company.cs" />
         <Compile Include="Model\OperatorCompany\CompanyInfo.cs" />
         <Compile Include="Model\OperatorCompany\CompanyValidator.cs" />
         <Compile Include="Model\OperatorCompany\Log.cs" />
+        <Compile Include="Model\OperatorCompany\StateManager.cs" />
         <Compile Include="Model\Operator\AccountValidateHelper.cs" />
         <Compile Include="Model\Operator\Call.cs" />
         <Compile Include="Model\Operator\GeneratorHelper.cs" />
-        <Compile Include="Model\Operator\gggg.cs" />
         <Compile Include="Model\Operator\Helper.cs" />
         <Compile Include="Model\Operator\MobileOperatorAccount.cs" />
         <Compile Include="Model\Operator\OperatorError.cs" />
-        <Compile Include="Model\StateManager.cs" />
         <Compile Include="Model\Storage.cs" />
         <Compile Include="Model\Tariff\Tariff.cs" />
         <Compile Include="Model\Tariff\TariffFreeVpn.cs" />
